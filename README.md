@@ -1,90 +1,130 @@
-# ✈️ Airfare Model Deployment  
+# ✈️ Airfare Model Deployment
 
-## 🎯 Project Overview  
-This project applies a full **machine learning workflow** to analyze and predict airfare yield performance using real-world data.  
-It covers data cleaning, exploratory data analysis (EDA), feature engineering, model training, evaluation, and deployment readiness — following a structured and professional workflow.
-
----
-
-## 🧩 Project Objectives  
-1. Clean and preprocess the dataset to ensure data quality and consistency.  
-2. Explore data distributions, correlations, and outliers through structured EDA.  
-3. Engineer relevant numerical and categorical features to enhance model performance.  
-4. Train and compare multiple regression algorithms.  
-5. Validate and export the best-performing model for deployment.
+## 🧩 Project Overview
+This project focuses on predicting **airfare yield** (`cur_yield`) using a variety of airline and route performance indicators.  
+It demonstrates a **complete end-to-end machine learning workflow**, from data preprocessing and feature selection to model evaluation and deployment readiness.
 
 ---
 
-## 🧠 Workflow Summary  
-**Step 1 – Data Cleaning:**  
-- Removed duplicates, handled missing values, and standardized column types.  
+## 📊 Dataset Description
+The dataset includes performance metrics from multiple airline routes and time periods.  
+Each observation represents a specific route and includes both historical and current fare and yield measures.
 
-**Step 2 – Exploratory Data Analysis (EDA):**  
-- Conducted univariate and bivariate analyses using histograms, scatter plots, and correlation heatmaps.  
-
-**Step 3 – Feature Engineering:**  
-- Created derived metrics such as `fare_per_passenger`, `passenger_growth_rate`, and `distance_efficiency`.  
-
-**Step 4 – Model Training:**  
-- Trained and compared four regression models:  
-  - Linear Regression  
-  - Decision Tree Regressor  
-  - Random Forest Regressor  
-  - Gradient Boosting Regressor  
-
-**Step 5 – Model Validation:**  
-- The **Linear Regression** model achieved the best results:  
-  - **R² = 1.0000**  
-  - **MSE = 0.000013**  
-- The model was saved as `best_linear_regression_model.pkl` using `joblib`.
-
-**Step 6 – Deployment Preparation:**  
-- Exported model and notebook files into a single deployment folder (`Airfare_Model_Deployment`).  
-- Uploaded final project files to GitHub for version control and portfolio presentation.
+### Key Features Used:
+- `cur_passengers` — Current passenger count  
+- `ly_yield` — Last year’s yield value  
+- `passenger_growth_rate` — Growth rate in passenger volume  
+- `cur_fare` — Current average fare  
+- `citymarketid` — Market or route identifier  
+- `ly_distance` — Last year’s flight distance  
+- `distance_efficiency` — Efficiency ratio of current vs. historical distance  
+- `ly_fare` — Last year’s average fare  
+- `yield_change` — Change in yield compared to previous year  
+- `fare_per_passenger` — Fare distributed per passenger  
+- `distance` — Current flight distance  
+- `fare_difference` — Difference between current and last year’s fares  
 
 ---
 
-## 📊 Model Performance Comparison  
+## ⚙️ Methodology
+
+### 1. Data Cleaning & Preprocessing
+- Handled missing values and outliers  
+- Scaled and normalized numerical columns  
+- Encoded categorical variables such as `citymarketid`  
+- Split data into **training (80%)** and **testing (20%)** sets  
+
+### 2. Feature Selection
+A **comprehensive hybrid approach** was applied combining:
+- **Random Forest Importance** – identified top-performing features  
+- **Correlation Filter** – removed redundant predictors  
+- **Lasso Regression (L1 Regularization)** – kept variables with meaningful linear coefficients  
+
+Final Selected Features:  
+`['cur_passengers', 'ly_yield', 'passenger_growth_rate', 'cur_fare', 'citymarketid', 'ly_distance', 'distance_efficiency', 'ly_fare', 'yield_change', 'fare_per_passenger', 'distance', 'fare_difference']`
+
+### 3. Model Training & Evaluation
+Trained and compared four models:
+- Linear Regression  
+- Decision Tree Regressor  
+- Random Forest Regressor  
+- Gradient Boosting Regressor  
 
 | Model | MSE | R² |
-|:--|--:|--:|
-| Linear Regression | 0.000013 | 1.0000 |
+|--------|------|------|
+| **Linear Regression** | **0.000013** | **1.000000** |
 | Gradient Boosting | 0.010251 | 0.999676 |
 | Random Forest | 0.014575 | 0.999539 |
 | Decision Tree | 0.018031 | 0.999430 |
 
----
-
-## 🧾 Files in This Repository  
-| File | Description |
-|:--|:--|
-| **mynewnotebook17.ipynb** | Complete Jupyter Notebook workflow containing all steps from data cleaning to model validation. |
-| **best_linear_regression_model.pkl** | Trained Linear Regression model serialized using Joblib. |
-| *(optional)* `Clean_Airfare_Dataset.csv` | Cleaned dataset used for training and testing. |
+✅ **Best Model:** Linear Regression  
+It achieved near-perfect accuracy with an R² of 1.0 and extremely low error values.
 
 ---
 
-## 💡 Key Learnings  
-- End-to-end ML project execution using Scikit-learn.  
-- Importance of structured workflow (EDA → Feature Engineering → Model Evaluation).  
-- Model validation and reproducibility through saving and reloading techniques.  
-- Version control and deployment using Git & GitHub.
+## 🧠 Model Files
+
+### `best_linear_regression_model.pkl`
+This is the **final deployed model**, trained using `LinearRegression()` from Scikit-learn and saved with `joblib`.  
+It is stored in binary format, so GitHub will only show a **“View raw”** link — clicking it downloads the file.
+
+To load and use it in Python:
+
+```python
+import joblib
+model = joblib.load('best_linear_regression_model.pkl')
+```
+
+> ⚠️ Note: The `.pkl` file cannot be viewed directly in GitHub or text editors.  
+> It must be loaded using Python to perform predictions.
 
 ---
 
-## 👩‍💻 Author  
-**Benedette Ogochukwu Chukwu**  
-📍 Data Science Enthusiast | Machine Learning Developer  
-🔗 [GitHub Profile](https://github.com/martystats)
+## 📈 Results & Insights
+- Linear Regression perfectly captured the relationship between fare and yield-related features.  
+- The results indicate strong linear dependence between key pricing factors such as fare, passenger growth, and yield change.  
+- Gradient Boosting and Random Forest models provided strong but slightly more complex alternatives.
 
 ---
 
-## 🧭 Next Steps  
-- Extend project to include real-time Streamlit deployment for yield prediction.  
-- Perform hyperparameter tuning (GridSearchCV) for further model optimization.  
-- Integrate dashboard visuals to support analytical insights.
+## 🧰 Tools & Libraries
+- **Python 3.x**  
+- **Pandas**, **NumPy**, **Matplotlib**, **Seaborn**  
+- **Scikit-learn** (`LinearRegression`, `RandomForestRegressor`, `DecisionTreeRegressor`, `GradientBoostingRegressor`, `train_test_split`, `joblib`)  
+- **Jupyter Notebook / VS Code**  
+- **Git & GitHub** for version control  
 
 ---
 
-### 🏁 Project Status: ✅ Completed  
-This project demonstrates a full machine learning pipeline from raw data to deployable model — built, validated, and published professionally.
+## 📁 Repository Structure
+```
+Airfare_Model_Deployment/
+│
+├── README.md
+├── mynewnotebook17.ipynb
+├── best_linear_regression_model.pkl
+├── best_random_forest_model.pkl
+├── airfare_cleaned_data.csv
+└── requirements.txt
+```
+
+---
+
+## 👩‍💻 Author
+**Martin**  
+Data Science & Machine Learning Enthusiast  
+📧 [Insert your email or LinkedIn profile link here]  
+
+---
+
+## 🚀 Future Work
+- Integrate a **Streamlit** or **Flask** app for real-time airfare prediction  
+- Extend the dataset to include **seasonal and macroeconomic variables**  
+- Apply **model explainability (SHAP or LIME)** to interpret feature influence  
+- Automate model retraining for dynamic fare trend updates  
+
+---
+
+### ⭐ Summary
+This project demonstrates a **professional-grade regression pipeline**, emphasizing data preprocessing, hybrid feature selection, and reproducible model deployment.  
+It highlights both the **technical workflow** and the **business insight** behind predicting airfare yield performance.
