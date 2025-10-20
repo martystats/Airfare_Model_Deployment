@@ -112,8 +112,7 @@ Airfare_Model_Deployment/
 
 ## 👩‍💻 Author
 **Martin**  
-Data Science & Machine Learning Enthusiast  
-📧 [Insert your email or LinkedIn profile link here]  
+Data Science & Machine Learning Enthusiast
 
 ---
 
